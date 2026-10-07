@@ -2,6 +2,7 @@
 # Reverses setup.sh, then removes the plugin. Run this INSTEAD of a bare
 # `omarchy plugin remove`, which can't undo the system changes.
 set -uo pipefail
+cd "$HOME"   # this script deletes its own folder; do not stay inside it
 id="ramselvaraj.caps-indicator"
 state="${XDG_STATE_HOME:-$HOME/.local/state}/caps-indicator"
 env_file="$HOME/.config/environment.d/99-capsim.conf"
