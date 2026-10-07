@@ -19,21 +19,30 @@ run (`build.sh`) and restarts it if it exits.
 
     omarchy plugin add https://github.com/ramselvaraj/omarchy-caps-indicator --enable
 
-That's it. On first run the plugin builds itself and applies the setup below.
-Log out and in once so Qt apps pick up the new input-method setting.
+The plugin builds itself, then shows a notification: **"Caps Lock Indicator needs
+one-time setup"**. Click **Set it up** (or run `setup.sh` from the plugin folder).
+Nothing on your system is changed, and the indicator does not start, until you accept.
+Log out and in once afterwards so Qt apps pick up the new input-method setting.
+
+## What setup changes
+
+- Disables `omarchy-fcitx5.service`. Only one input method can own the keyboard
+  seat, so this **replaces fcitx5**. The bar's keyboard-layout widget depends on
+  fcitx5 and may stop working.
+- Creates `~/.config/environment.d/99-capsim.conf` (`QT_IM_MODULE=wayland`) so Qt
+  apps talk to the compositor directly. An existing file is never overwritten.
+
+It records exactly what it did in `~/.local/state/caps-indicator/accepted`.
 
 ## Caveats
 
-- Only one input method can own the keyboard seat, so this **replaces fcitx5**:
-  on start the plugin disables `omarchy-fcitx5.service`. The bar's
-  keyboard-layout widget depends on fcitx5 and may stop working.
-- Qt apps default to the fcitx plugin, so the plugin writes
-  `~/.config/environment.d/99-capsim.conf` (`QT_IM_MODULE=wayland`) so they talk
-  to the compositor directly.
 - Apps drawing their own text fields without text-input support won't show it.
 
-## Undo
+## Uninstall
 
-    omarchy plugin disable ramselvaraj.caps-indicator
-    rm ~/.config/environment.d/99-capsim.conf
-    systemctl --user enable --now omarchy-fcitx5.service
+    ~/.config/omarchy/plugins/ramselvaraj.caps-indicator/uninstall.sh
+
+This re-enables fcitx5 (only if it was enabled before), deletes the env file (only
+if the plugin created it), and removes the plugin. Use it instead of a bare
+`omarchy plugin remove`, which cannot undo the system changes. Log out and in once
+afterwards.

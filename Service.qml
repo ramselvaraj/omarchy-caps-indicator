@@ -17,9 +17,39 @@ Item {
     : Quickshell.env("HOME") + "/.config/omarchy/plugins/ramselvaraj.caps-indicator"
 
   property bool binaryFound: false
+  property bool consented: false
+  property bool consentChecked: false
+  property bool prompted: false
   property string buildError: ""
 
-  Component.onCompleted: checkProc.running = true
+  Component.onCompleted: { checkProc.running = true; consentProc.running = true }
+
+  // Consent marker written by setup.sh. Polled until present so a manual
+  // `setup.sh` run is picked up without restarting the shell.
+  Process {
+    id: consentProc
+    command: ["sh", "-c", "test -f \"${XDG_STATE_HOME:-$HOME/.local/state}/caps-indicator/accepted\" && echo yes || echo no"]
+    stdout: StdioCollector {
+      onStreamFinished: { root.consented = text.trim() === "yes"; root.consentChecked = true; root.maybePrompt() }
+    }
+  }
+  Timer {
+    interval: 4000
+    repeat: true
+    running: !root.consented
+    onTriggered: if (!consentProc.running) consentProc.running = true
+  }
+
+  // Ask once per shell start; nothing is changed until the user accepts.
+  Process {
+    id: promptProc
+    command: [root.pluginDir + "/prompt.sh"]
+  }
+  onBinaryFoundChanged: maybePrompt()
+  onConsentedChanged: if (consented && binaryFound && !capsim.running) capsim.running = true
+  function maybePrompt() {
+    if (binaryFound && consentChecked && !consented && !prompted) { prompted = true; promptProc.running = true }
+  }
 
   Process {
     id: checkProc
@@ -48,14 +78,14 @@ Item {
   Process {
     id: capsim
     command: [root.pluginDir + "/run.sh"]
-    running: root.binaryFound
+    running: root.binaryFound && root.consented
     stderr: SplitParser { onRead: function(line) { console.warn("capsim: " + line) } }
-    onExited: if (root.binaryFound) restartTimer.restart()
+    onExited: function(code) { if (root.binaryFound && root.consented && code !== 3) restartTimer.restart() }
   }
 
   Timer {
     id: restartTimer
     interval: 3000
-    onTriggered: if (root.binaryFound && !capsim.running) capsim.running = true
+    onTriggered: if (root.binaryFound && root.consented && !capsim.running) capsim.running = true
   }
 }
