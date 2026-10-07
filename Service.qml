@@ -23,7 +23,7 @@ Item {
   property bool prompted: false
   property string buildError: ""
 
-  Component.onCompleted: { checkProc.running = true; consentProc.running = true }
+  Component.onCompleted: { console.warn("caps-indicator: service started"); checkProc.running = true; consentProc.running = true }
 
   // Consent marker written by setup.sh. Polled until present so a manual
   // `setup.sh` run is picked up without restarting the shell.
@@ -51,6 +51,8 @@ Item {
   Process {
     id: promptProc
     command: [root.pluginDir + "/prompt.sh"]
+    stderr: SplitParser { onRead: function(line) { console.warn("caps-indicator prompt: " + line) } }
+    onExited: function(code) { console.warn("caps-indicator: consent prompt exited " + code) }
   }
   onBinaryFoundChanged: maybePrompt()
   onConsentedChanged: if (consented && binaryFound && !capsim.running) capsim.running = true
@@ -61,7 +63,7 @@ Item {
   Timer {
     id: promptTimer
     interval: 20000
-    onTriggered: if (!root.consented && !root.declined && !root.prompted) { root.prompted = true; promptProc.running = true }
+    onTriggered: if (!root.consented && !root.declined && !root.prompted) { console.warn("caps-indicator: asking for consent"); root.prompted = true; promptProc.running = true }
   }
 
   Process {
