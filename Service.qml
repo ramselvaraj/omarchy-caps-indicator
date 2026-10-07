@@ -55,7 +55,7 @@ Item {
   onBinaryFoundChanged: maybePrompt()
   onConsentedChanged: if (consented && binaryFound && !capsim.running) capsim.running = true
   function maybePrompt() {
-    if (binaryFound && consentChecked && !consented && !declined && !prompted) promptTimer.restart()
+    if (binaryFound && consentChecked && !consented && !declined && !prompted && !promptTimer.running) promptTimer.start()
   }
   // Short delay so a `setup.sh` chained after `omarchy plugin add` can finish first.
   Timer {

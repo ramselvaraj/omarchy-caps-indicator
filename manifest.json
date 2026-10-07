@@ -16,7 +16,6 @@
   "kinds": [
     "service"
   ],
-  "keepLoaded": true,
   "entryPoints": {
     "service": "Service.qml"
   },
