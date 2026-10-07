@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "ramselvaraj.caps-indicator",
+  "name": "Caps Lock Indicator",
+  "version": "1.0.0",
+  "author": "ramselvaraj",
+  "license": "MIT",
+  "description": "A macOS-style Caps Lock pill drawn at the text caret in any Wayland app, in your theme's accent color. It appears only where the app reports a real caret position, and nowhere else.",
+  "keywords": [
+    "caps lock",
+    "indicator",
+    "caret",
+    "input-method",
+    "theme"
+  ],
+  "kinds": [
+    "service"
+  ],
+  "keepLoaded": true,
+  "entryPoints": {
+    "service": "Service.qml"
+  },
+  "homepage": "https://github.com/ramselvaraj/omarchy-caps-indicator",
+  "repository": "https://github.com/ramselvaraj/omarchy-caps-indicator"
+}
