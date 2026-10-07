@@ -1,5 +1,7 @@
 # Caps Lock Indicator
 
+![A Caps Lock pill drawn at the text cursor in a terminal](preview.png)
+
 A macOS-style Caps Lock pill drawn right at the text caret, in any Wayland app,
 filled with your Omarchy theme's accent color (it follows theme changes live).
 
