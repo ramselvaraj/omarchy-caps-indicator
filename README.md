@@ -16,15 +16,18 @@ run (`build.sh`) and restarts it if it exits.
 ## Install
 
     omarchy plugin add https://github.com/ramselvaraj/omarchy-caps-indicator --enable
-    ~/.config/omarchy/plugins/ramselvaraj.caps-indicator/setup.sh   # then log out/in
+
+That's it. On first run the plugin builds itself and applies the setup below.
+Log out and in once so Qt apps pick up the new input-method setting.
 
 ## Caveats
 
-- Only one input method can own the keyboard seat, so this **replaces fcitx5**
-  (the plugin stops `omarchy-fcitx5.service`; `setup.sh` disables it). The bar's
+- Only one input method can own the keyboard seat, so this **replaces fcitx5**:
+  on start the plugin disables `omarchy-fcitx5.service`. The bar's
   keyboard-layout widget depends on fcitx5 and may stop working.
-- Qt apps default to the fcitx plugin; `setup.sh` sets `QT_IM_MODULE=wayland`
-  so they talk to the compositor directly.
+- Qt apps default to the fcitx plugin, so the plugin writes
+  `~/.config/environment.d/99-capsim.conf` (`QT_IM_MODULE=wayland`) so they talk
+  to the compositor directly.
 - Apps drawing their own text fields without text-input support won't show it.
 
 ## Undo
