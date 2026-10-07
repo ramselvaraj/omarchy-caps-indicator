@@ -20,12 +20,12 @@
   <rect width="1216" height="816" fill="url(#glow)"/>
 
   <!-- header -->
-  <text x="108" y="96" font-family="DejaVu Sans, sans-serif" font-weight="700" font-size="52" fill="#F0FFFC">Caps Lock Indicator</text>
-  <text x="108" y="140" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#91A5A2">Shows up at your text cursor, in any Wayland app.</text>
+  <text x="108" y="96" font-family="DejaVu Sans Mono, monospace" font-weight="700" font-size="52" fill="#F0FFFC">Caps Lock Indicator</text>
+  <text x="108" y="140" font-family="DejaVu Sans Mono, monospace" font-size="21" fill="#91A5A2">Shows up at your text cursor, in any Wayland app.</text>
 
   <!-- terminal window -->
   <g filter="url(#shadow)">
-    <rect x="108" y="184" width="1000" height="440" rx="18" fill="#0A1214" stroke="#1B2E2E" stroke-width="2"/>
+    <rect x="108" y="184" width="1000" height="380" rx="18" fill="#0A1214" stroke="#1B2E2E" stroke-width="2"/>
   </g>
   <path d="M108 202a18 18 0 0 1 18-18h964a18 18 0 0 1 18 18v38H108z" fill="#0E191B"/>
   <line x1="108" y1="240" x2="1108" y2="240" stroke="#1B2E2E" stroke-width="2"/>
@@ -52,24 +52,16 @@
     <rect width="64" height="20" rx="6" fill="#24F6D2"/>
     <path d="M11 4 L16 10 L13 10 L13 13 L9 13 L9 10 L6 10 Z" fill="#030506"/>
     <rect x="9" y="15" width="4" height="1.5" fill="#030506"/>
-    <text x="21" y="14.5" font-family="DejaVu Sans, sans-serif" font-weight="700" font-size="11" fill="#030506">CAPS</text>
+    <text x="21" y="14.5" font-family="DejaVu Sans Mono, monospace" font-weight="700" font-size="11" fill="#030506">CAPS</text>
   </g>
 
   <!-- callout -->
   <path d="M572 482h74" stroke="#24F6D2" stroke-width="2.5" stroke-dasharray="2 9" stroke-linecap="round"/>
-  <text x="668" y="480" font-family="DejaVu Sans, sans-serif" font-weight="700" font-size="27" fill="#F0FFFC">Right where you're typing</text>
-  <text x="668" y="516" font-family="DejaVu Sans, sans-serif" font-size="21" fill="#91A5A2">Only when the app reports a caret.</text>
-
-  <!-- the thing it is NOT: corner OSD -->
-  <g opacity="0.6">
-    <rect x="912" y="552" width="154" height="38" rx="11" fill="none" stroke="#526966" stroke-width="2" stroke-dasharray="6 6"/>
-    <text x="989" y="578" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-weight="700" font-size="20" fill="#526966">CAPS</text>
-    <path d="M922 559L1056 583" stroke="#FF6B7A" stroke-width="2.5" stroke-linecap="round" opacity="0.75"/>
-  </g>
-  <text x="989" y="614" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#526966">usual corner OSD</text>
+  <text x="668" y="480" font-family="DejaVu Sans Mono, monospace" font-weight="700" font-size="25" fill="#F0FFFC">Right where you're typing</text>
+  <text x="668" y="516" font-family="DejaVu Sans Mono, monospace" font-size="18" fill="#91A5A2">Only when the app reports a caret.</text>
 
   <!-- footer -->
-  <g font-family="DejaVu Sans, sans-serif" font-size="21" fill="#91A5A2" text-anchor="middle">
-    <text x="608" y="716">Follows your Omarchy theme   ·   Zero config   ·   Native and lightweight</text>
+  <g font-family="DejaVu Sans Mono, monospace" font-size="18" fill="#91A5A2" text-anchor="middle">
+    <text x="608" y="680">Follows your Omarchy theme   ·   Zero config   ·   Native and lightweight</text>
   </g>
 </svg>
