@@ -35,8 +35,8 @@
 
   <!-- terminal text -->
   <g font-family="DejaVu Sans Mono, monospace" font-size="34">
-    <text x="156" y="306" fill="#526966">$ ls ~/projects</text>
-    <text x="156" y="354" fill="#526966">omarchy  glance  notes</text>
+    <text x="156" y="306" fill="#526966">$ ls ~</text>
+    <text x="156" y="354" fill="#526966">Documents  Downloads  Music</text>
     <text x="156" y="426" fill="#D4E1DF">$ GIT STATUS</text>
   </g>
 
