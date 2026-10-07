@@ -19,6 +19,7 @@ Item {
   property bool binaryFound: false
   property bool consented: false
   property bool consentChecked: false
+  property bool declined: false
   property bool prompted: false
   property string buildError: ""
 
@@ -28,9 +29,15 @@ Item {
   // `setup.sh` run is picked up without restarting the shell.
   Process {
     id: consentProc
-    command: ["sh", "-c", "test -f \"${XDG_STATE_HOME:-$HOME/.local/state}/caps-indicator/accepted\" && echo yes || echo no"]
+    command: ["sh", "-c", "d=\"${XDG_STATE_HOME:-$HOME/.local/state}/caps-indicator\"; if [ -f \"$d/accepted\" ]; then echo yes; elif [ -f \"$d/declined\" ]; then echo declined; else echo no; fi"]
     stdout: StdioCollector {
-      onStreamFinished: { root.consented = text.trim() === "yes"; root.consentChecked = true; root.maybePrompt() }
+      onStreamFinished: {
+        var t = text.trim()
+        root.consented = t === "yes"
+        root.declined = t === "declined"
+        root.consentChecked = true
+        root.maybePrompt()
+      }
     }
   }
   Timer {
@@ -48,7 +55,13 @@ Item {
   onBinaryFoundChanged: maybePrompt()
   onConsentedChanged: if (consented && binaryFound && !capsim.running) capsim.running = true
   function maybePrompt() {
-    if (binaryFound && consentChecked && !consented && !prompted) { prompted = true; promptProc.running = true }
+    if (binaryFound && consentChecked && !consented && !declined && !prompted) promptTimer.restart()
+  }
+  // Short delay so a `setup.sh` chained after `omarchy plugin add` can finish first.
+  Timer {
+    id: promptTimer
+    interval: 20000
+    onTriggered: if (!root.consented && !root.declined && !root.prompted) { root.prompted = true; promptProc.running = true }
   }
 
   Process {

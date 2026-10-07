@@ -17,11 +17,13 @@ run (`build.sh`) and restarts it if it exits.
 
 ## Install
 
-    omarchy plugin add https://github.com/ramselvaraj/omarchy-caps-indicator --enable
+    omarchy plugin add https://github.com/ramselvaraj/omarchy-caps-indicator --enable \
+      && ~/.config/omarchy/plugins/ramselvaraj.caps-indicator/setup.sh
 
-The plugin builds itself, then shows a notification: **"Caps Lock Indicator needs
-one-time setup"**. Click **Set it up** (or run `setup.sh` from the plugin folder).
-Nothing on your system is changed, and the indicator does not start, until you accept.
+`setup.sh` lists exactly what it will change and asks for a yes/no. Nothing on your
+system is changed, and the indicator does not start, until you answer yes. (If you
+install without it, the plugin opens a small terminal with the same prompt on first
+run. A "no" is remembered; run `setup.sh` later to change your mind.)
 Log out and in once afterwards so Qt apps pick up the new input-method setting.
 
 ## What setup changes
